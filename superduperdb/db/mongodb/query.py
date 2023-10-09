@@ -729,7 +729,9 @@ class Aggregate(Select):
             keys=keys,
             db=db,
         )
-        step['$search']['knnBeta']['path'] = f'_outputs.{key}.{model}'
+        indexing_key = vector_index.indexing_listener.key
+        indexing_model = vector_index.indexing_listener.model.identifier
+        step['$search']['knnBeta']['path'] = f'_outputs.{indexing_key}.{indexing_model}'
         step['$search']['index'] = vector_index.identifier
         del step['$search']['knnBeta']['like']
         return step
